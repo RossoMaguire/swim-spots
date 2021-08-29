@@ -1,5 +1,5 @@
 -- Table Definitions
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS "public"."users" (
     "id" serial PRIMARY KEY,
     "first_name" VARCHAR ( 50 ) NOT NULL,
     "last_name" VARCHAR ( 50 ) NOT NULL,
@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS "public"."spots" (
 CREATE TABLE IF NOT EXISTS "public"."favourites" (
     "id" serial PRIMARY KEY,
     "user_id" INT NOT NULL,
-    "spot_id" INT NOT NULL,
-    "spot_name" VARCHAR NOT NULL,
+    "swim_spot_id" INT NOT NULL,
+    "swim_spot_name" VARCHAR NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (spot_id) REFERENCES spots (id)
+    FOREIGN KEY (swim_spot_id) REFERENCES spots (id)
 );

@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/RossoMaguire/swim-spots/db"
+	"github.com/RossoMaguire/swim-spots/router"
 
-	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 )
@@ -16,8 +16,8 @@ func main() {
 	initDB()
 	log.Println("Starting the HTTP server on port 8090")
 
-	router := mux.NewRouter().StrictSlash(true)
-	log.Fatal(http.ListenAndServe(":8090", router))
+	r := router.Router();
+	log.Fatal(http.ListenAndServe(":8090", r))
 }
 
 func initDB() {
