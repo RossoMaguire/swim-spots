@@ -11,12 +11,13 @@ import (
 )
 
 func main() {
+	// Connect to godotenv
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
   
-	// Grabbing env variables for connection string
+	// Grabbing env variables for connection string using godotenv
 	config :=
 		db.Config{
 			Server: os.Getenv("DBServer"),
@@ -25,6 +26,8 @@ func main() {
 		}
 
 	connectionString := db.GetConnectionString(config)
+
+	// Connect to the db 
 	err = db.Connect(connectionString)
 	if err != nil {
 		panic(err.Error())

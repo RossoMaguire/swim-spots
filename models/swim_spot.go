@@ -5,6 +5,7 @@ import "time"
 // SwimSpot object for saving in db
 type SwimSpot struct {
 	ID           int    `json:"id"`
+	UserID       int    `json:"userid"`
 	Name         string `json:"name"`
 	Description  string `json:"description"`
 	County       string `json:"county"`
