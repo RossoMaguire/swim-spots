@@ -1,12 +1,12 @@
 /* Users */
-INSERT INTO users("first_name", "last_name", "email", "password", "created_at", "updated_at")
-VALUES ('Ross', 'Maguire', 'ross@example.com', 'test', '2021-02-12 15:32:21', '2021-04-12 15:32:21');
+INSERT INTO users("user_name", "first_name", "last_name", "email", "password", "created_at", "updated_at")
+VALUES ('rossmag17', 'Ross', 'Maguire', 'ross@example.com', 'test', '2021-02-12 15:32:21', '2021-04-12 15:32:21');
 
-INSERT INTO users("first_name", "last_name", "email", "password", "created_at", "updated_at")
-VALUES ('John', 'Doe', 'john@example.com', 'test', '2021-02-12 15:32:21', '2021-04-12 15:32:21' );
+INSERT INTO users("user_name", "first_name", "last_name", "email", "password", "created_at", "updated_at")
+VALUES ('jhondoe', 'John', 'Doe', 'john@example.com', 'test', '2021-02-12 15:32:21', '2021-04-12 15:32:21' );
 
-INSERT INTO users("first_name", "last_name", "email", "password", "created_at", "updated_at")
-VALUES ('Jane', 'Doe', 'jane@example.com', 'test', '2021-02-12 15:32:21', '2021-04-12 15:32:21');
+INSERT INTO users("user_name", "first_name", "last_name", "email", "password", "created_at", "updated_at")
+VALUES ('janedoe', 'Jane', 'Doe', 'jane@example.com', 'test', '2021-02-12 15:32:21', '2021-04-12 15:32:21');
 
 /* Swim Spots */
 INSERT INTO spots("user_id", "name", "description", "county", "coordinates", "favourites", "created_at", "updated_at")

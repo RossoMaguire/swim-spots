@@ -10,10 +10,14 @@ func Router() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true);
 
+	// Handle User Registration & Login
+	router.HandleFunc("/api/users/{user_name}/login", api.GetUserByUserName).Methods("GET")
+	router.HandleFunc("/api/users/signup", api.CreateUser).Methods("POST");
+
 	// CRUD Users
 	router.HandleFunc("/api/users", api.GetAllUsers).Methods("GET");
 	router.HandleFunc("/api/users/{id}", api.GetUserById).Methods("GET");
-	router.HandleFunc("/api/users/create", api.CreateUser).Methods("POST");
+	
 
 	// CRUD Swim Spots
 	router.HandleFunc("/api/spots", api.GetAllSwimSpots).Methods("GET");
