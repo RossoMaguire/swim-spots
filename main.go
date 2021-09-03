@@ -7,16 +7,23 @@ import (
 
 	"github.com/RossoMaguire/swim-spots/db"
 	"github.com/RossoMaguire/swim-spots/router"
+	"github.com/RossoMaguire/swim-spots/server"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 )
+
 
 func main() {
 	initDB()
 	log.Println("Starting the HTTP server on port 8090")
 
 	r := router.Router();
+
+	// Pass the frontend to the http server
+	spa := server.SpaHandler{StaticPath: "frontend/build", IndexPath: "index.html"}
+	r.PathPrefix("/").Handler(spa)
+
 	log.Fatal(http.ListenAndServe(":8090", r))
 }
 
