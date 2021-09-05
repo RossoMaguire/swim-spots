@@ -18,10 +18,11 @@ func main() {
 	initDB()
 	log.Println("Starting the HTTP server on port 8090")
 
-	r := router.Router();
+	r := router.Router()
 
 	// Pass the frontend to the http server
 	spa := server.SpaHandler{StaticPath: "frontend/build", IndexPath: "index.html"}
+	
 	r.PathPrefix("/").Handler(spa)
 
 	log.Fatal(http.ListenAndServe(":8090", r))

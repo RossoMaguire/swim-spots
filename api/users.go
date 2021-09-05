@@ -2,68 +2,89 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	"github.com/RossoMaguire/swim-spots/api/middleware"
 	"github.com/RossoMaguire/swim-spots/db"
 	"github.com/RossoMaguire/swim-spots/models"
 	"github.com/gorilla/mux"
 )
 
-type CreateUserResponse struct {
-	UserName  string `json:"user_name"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
-}
-
 // Will READ all users
 func GetAllUsers(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
+
 	var users []models.User
 	db.Connector.Find(&users)
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	middleware.AddCorsHeader(w)
 	json.NewEncoder(w).Encode(users)
+
+	}
 }
 
 // Will READ a single user by ID
 func GetUserById(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	vars := mux.Vars(r)
 	key := vars["id"]
 
 	var user []models.User
 	db.Connector.Find(&user, key)
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
+	}
 }
 
-// Will READ a single user by email
-func GetUserByUserName(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	key := vars["user_name"]
-	fmt.Println(key)
-
-	var user []models.User
-	db.Connector.Find(&user, "user_name = ?", key)
+// Will READ a single user by username
+func CreateLoginByUserName(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(user)
-}
+	middleware.AddCorsHeader(w)
 
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 
-// Will CREATE a user
-func CreateUser(w http.ResponseWriter, r *http.Request) {
 	requestBody, _ := ioutil.ReadAll(r.Body)
-	var user models.User
-	json.Unmarshal(requestBody, &user)
-	db.Connector.Create(&user)
 
-	var response CreateUserResponse
-	json.Unmarshal(requestBody, &response)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response)
+	var credentials map[string]interface{}
+	
+    err := json.Unmarshal(requestBody, &credentials)
+    if err != nil {
+        panic(err)
+	}
+
+	var user models.User
+
+	if result := db.Connector.Find(&user, "user_name = ?", credentials["user_name"])
+	result.Error != nil {
+		w.WriteHeader(http.StatusNotFound)
+		panic(err)
+	}
+
+	if result := db.Connector.Find(&user, "password = ?", credentials["password"])
+	result.Error != nil {
+		w.WriteHeader(http.StatusNotFound)
+		panic(err)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(user)
+
+	}
 }
 

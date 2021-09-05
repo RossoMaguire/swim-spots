@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/RossoMaguire/swim-spots/api/middleware"
 	"github.com/RossoMaguire/swim-spots/db"
 	"github.com/RossoMaguire/swim-spots/models"
 	"github.com/gorilla/mux"
@@ -15,8 +16,14 @@ func GetAllSwimSpots(w http.ResponseWriter, r *http.Request) {
 	var spots []models.Spot
 	db.Connector.Find(&spots)
 	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(spots)
+	}
 }
 
 // Will READ a single swim spot
@@ -27,7 +34,13 @@ func GetSwimSpotById(w http.ResponseWriter, r *http.Request) {
 	var spot models.Spot
 	db.Connector.First(&spot, key)
 	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	json.NewEncoder(w).Encode(spot)
+	}
 }
 
 // Will CREATE a swim spot
@@ -38,6 +51,12 @@ func CreateSpot(w http.ResponseWriter, r *http.Request) {
 
 	db.Connector.Create(&spot)
 	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(spot)
+	}
 }

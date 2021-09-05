@@ -13,6 +13,9 @@ type SpaHandler struct {
 
 // ServeHTTP inspects the URL path to locate React. If a file is found, it will be served. If not, the file located at the index path will be served.
 func (h SpaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+    
     // get the absolute path to prevent directory traversal
 	path, err := filepath.Abs(r.URL.Path)
 	if err != nil {
@@ -38,4 +41,8 @@ func (h SpaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
     // otherwise, use http.FileServer to serve the React app
 	http.FileServer(http.Dir(h.StaticPath)).ServeHTTP(w, r)
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }

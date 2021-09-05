@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/RossoMaguire/swim-spots/api/middleware"
 	"github.com/RossoMaguire/swim-spots/db"
 	"github.com/RossoMaguire/swim-spots/models"
 	"github.com/gorilla/mux"
@@ -15,8 +16,14 @@ func GetAllFavourites(w http.ResponseWriter, r *http.Request) {
 	var favourites []models.Favourite
 	db.Connector.Find(&favourites)
 	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(favourites)
+    }
 }
 
 // Will READ all favourites by user id
@@ -28,8 +35,14 @@ func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 
 	db.Connector.Find(&favourites, "user_id = ?", key)
 	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(favourites)
+	}
 }
 
 // Will CREATE a favourite 
@@ -39,7 +52,13 @@ func CreateFavourite(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(requestBody, &favourite)
 
 	db.Connector.Create(&favourite)
-	w.Header().Set("Content-Type", "application/json")
+    w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(favourite)
+	}
 }
