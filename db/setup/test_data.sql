@@ -19,15 +19,15 @@ INSERT INTO spots("user_name", "name", "description", "county", "coordinates", "
 VALUES ('janedoe', 'Lough Derg', 'Tranquil Lake in Clare', 'Clare', '52.914367841147964, -8.400402272585476', 1);
 
 /* Favourites */
-INSERT INTO favourites("user_id", "swim_spot_id", "swim_spot_name")
-VALUES (1, 1, 'White Rock Beach');
+INSERT INTO favourites("user_name", "swim_spot_name")
+VALUES ('rossmag17', 'White Rock Beach');
 
-INSERT INTO favourites("user_id", "swim_spot_id", "swim_spot_name")
-VALUES (1, 2, 'Howth Cliff');
+INSERT INTO favourites("user_name", "swim_spot_name")
+VALUES ('rossmag17', 'Howth Cliff');
 
-INSERT INTO favourites("user_id", "swim_spot_id", "swim_spot_name")
-VALUES (2, 1, 'White Rock Beach');
+INSERT INTO favourites("user_name", "swim_spot_name")
+VALUES ('jhondoe', 'White Rock Beach');
 
-INSERT INTO favourites("user_id", "swim_spot_id", "swim_spot_name")
-VALUES (3, 3, 'Lough Derg');
+INSERT INTO favourites("user_name", "swim_spot_name")
+VALUES ('janedoe', 'Lough Derg');
 

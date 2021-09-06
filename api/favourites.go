@@ -48,7 +48,7 @@ func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 // Will CREATE a favourite 
 func CreateFavourite(w http.ResponseWriter, r *http.Request) {
 	requestBody, _ := ioutil.ReadAll(r.Body)
-	var favourite models.Spot
+	var favourite models.Favourite
 	json.Unmarshal(requestBody, &favourite)
 
 	db.Connector.Create(&favourite)

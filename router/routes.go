@@ -25,6 +25,7 @@ func Router() *mux.Router {
 
 	// CRUD Favourites
     router.HandleFunc("/api/favourites", api.GetAllFavourites).Methods("GET", "OPTIONS");
+	router.HandleFunc("/api/favourites/create", api.CreateFavourite).Methods("POST");
 	router.HandleFunc("/api/favourites/{user_id}", api.GetAllFavouritesByUser).Methods("GET", "OPTIONS");
 
 	return router

@@ -58,7 +58,6 @@ const Feed = (props: IFeedProps): React.ReactElement => {
               // sanitze coordinates string
               coordinates={spot.coordinates.replace(/\s/g, "")}
               county={spot.county}
-              faves={spot.favourites}
               username={spot.user_name}
             />
           ))}

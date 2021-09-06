@@ -61,7 +61,6 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
         <div className="ui stacked segment">
           <div className="field">
             <div className="ui left icon input">
-              <i className="user icon"></i>
               <input
                 type="text"
                 name="name"
@@ -72,7 +71,6 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
           </div>
           <div className="field">
             <div className="ui left icon input">
-              <i className="lock icon"></i>
               <input
                 type="text"
                 name="description"
@@ -83,7 +81,6 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
           </div>
           <div className="field">
             <div className="ui left icon input">
-              <i className="lock icon"></i>
               <input
                 type="text"
                 name="county"
@@ -94,7 +91,6 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
           </div>
           <div className="field">
             <div className="ui left icon input">
-              <i className="lock icon"></i>
               <input
                 type="text"
                 name="coordinates"

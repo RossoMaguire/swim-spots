@@ -21,9 +21,6 @@ CREATE TABLE IF NOT EXISTS "public"."spots" (
 
 CREATE TABLE IF NOT EXISTS "public"."favourites" (
     "id" serial PRIMARY KEY,
-    "user_id" INT NOT NULL,
-    "swim_spot_id" INT NOT NULL,
-    "swim_spot_name" VARCHAR NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (swim_spot_id) REFERENCES spots (id)
+    "user_name" VARCHAR NOT NULL,
+    "swim_spot_name" VARCHAR NOT NULL
 );
