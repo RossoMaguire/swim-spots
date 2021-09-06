@@ -61,9 +61,6 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
 
   return (
     <div className="item">
-      <div className="image">
-        <img alt={props.name} src="/images/wireframe/image.png" />
-      </div>
       <div className="content">
         <a
           className="header"

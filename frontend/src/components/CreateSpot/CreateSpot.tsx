@@ -28,10 +28,10 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
     setCoordinates(e.target.value);
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    axios
+    await axios
       .post("http://localhost:8090/api/spots/create", {
         user_name: props.user,
         name: name,
@@ -42,13 +42,14 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
       .then((res) => {
         console.log(res);
         console.log(res.data);
-        history.push("/feed");
       })
       .catch((err) => {
         console.log(err);
         const msg = document.getElementById("create-error-msg");
         msg!.style.display = "block";
       });
+
+    history.push("/feed");
   };
 
   return (

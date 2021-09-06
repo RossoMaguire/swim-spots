@@ -11,7 +11,6 @@ Frontend is built with React and TypeScript.
 ## Getting Started
 
 Clone this repo and then cd into the base directory. From there run `go mod vendor` to install dependencies.
-
 To install frontend dependencies cd into frontend and from there run `npm install`.
 
 ### Database

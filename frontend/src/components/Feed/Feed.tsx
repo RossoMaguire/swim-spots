@@ -48,7 +48,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
       <div className="sixteen wide column">
         <h1>Welcome to Swim Spots!</h1>
       </div>
-      <div className="twelve wide column">
+      <div className="ten wide column">
         <div className="ui items">
           {swimSpots.map((spot) => (
             <SwimPanel
@@ -63,7 +63,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
           ))}
         </div>
       </div>
-      <div className="four wide column">
+      <div className="six wide column">
         <p onClick={props.handleLogout} style={{ cursor: "pointer" }}>
           Logout
         </p>
