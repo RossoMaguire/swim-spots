@@ -4,41 +4,46 @@ Swim Spots is an application which allows users to post co-ordinates of awesome 
 
 ### Built With
 
-Swim Spots is built with Go 1.16.6
+API and backend is built with Go 1.16.6.
+Remote DB is built with Postres and hosted with Heroku.
+Frontend is built with React and TypeScript.
 
 ## Getting Started
 
 Clone this repo and then cd into the base directory. From there run `go mod vendor` to install dependencies.
 
+To install frontend dependencies cd into frontend and from there run `npm install`.
+
 ### Database
 
-Ensure you have [Postgres](https://www.postgresql.org/) installed on your machine.
-Start Postgres and create a database called **swim_spots** :
+The DB connection reads from Environment variables for connecting to the database which is hosted on Heroku.
+Create a .env file in the base directory - refer to the report for the values you will need for these keys :
 
 ```
-CREATE DATABASE "swim_spots";
-```
-
-The DB connection reads from Env variables for connecting to the database but you can use the default user `postgres` with no password for quick start.
-
-Ceate a .env file in the base directory - for default connection insert the following details :
-
-```
-DBSERVER=localhost:5432
-DBNAME=swim_spots
-DBUSER=postgres
+DBSERVER=
+DBNAME=
+DBUSER=
+DBPASS=
 ```
 
 The connection string in the app will read these and open the connection to the database.
-To test the connection to the db and to run the api server :
+
+### Start the project
+
+To open the connection to the db and to run the api server :
 
 ```
 go run main.go
 ```
 
-Install test data once the db is created and accepting connections by running the following from the base directory of the repo in the terminal :
+To start the frontend:
 
 ```
-psql -U postgres -d swim_spots -a -f db/setup/init.sql
-psql -U postgres -d swim_spots -a -f db/setup/test_data.sql
+cd frontend
+yarn start
 ```
+
+Visit the frontend UI on `localhost:3000` to use the website.
+An example account login can be found in the report.
+
+To make API requests via curl or Postman, refer to the endpoints in `routes.go`.
