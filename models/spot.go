@@ -8,5 +8,4 @@ type Spot struct {
 	Description  string    `json:"description"`
 	County       string    `json:"county"`
 	Coordinates  string    `json:"coordinates"`
-	Favourites   int       `json:"favourites"`
 }

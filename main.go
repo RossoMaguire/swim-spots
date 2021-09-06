@@ -30,7 +30,7 @@ func main() {
 
 func initDB() {
 	// Connect to godotenv
-	err := godotenv.Load()
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -38,8 +38,9 @@ func initDB() {
 	// Grabbing env variables for connection string using godotenv
 	config :=
 		db.Config{
-			Server: os.Getenv("DBServer"),
-			User:   os.Getenv("DBUser"),
+			Server: os.Getenv("DBSERVER"),
+			User:   os.Getenv("DBUSER"),
+			Pass:   os.Getenv("DBPASS"),
 			DB:     os.Getenv("DBNAME"),
 		}
 

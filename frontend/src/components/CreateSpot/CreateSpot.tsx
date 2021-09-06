@@ -38,7 +38,6 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
         description: desc,
         county: county,
         coordinates: coordinates,
-        favourites: 0,
       })
       .then((res) => {
         console.log(res);
