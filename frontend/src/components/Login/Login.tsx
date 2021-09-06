@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 interface ILogin {
   handleLogin: Function;
-  status: boolean;
 }
 
 const Login = (props: ILogin): React.ReactElement => {
@@ -29,11 +28,11 @@ const Login = (props: ILogin): React.ReactElement => {
       .then((res) => {
         console.log(res);
         console.log(res.data);
-        props.handleLogin();
+        props.handleLogin(res.data.user_name);
       })
       .catch((err) => {
         console.log(err);
-        const msg = document.getElementById("error-msg");
+        const msg = document.getElementById("login-error-msg");
         msg!.style.display = "block";
       });
   };
@@ -80,7 +79,7 @@ const Login = (props: ILogin): React.ReactElement => {
             />
           </div>
 
-          <div id="error-msg" className="ui error message">
+          <div id="login-error-msg" className="ui error message">
             Sorry - that user doesn't exist
           </div>
         </form>

@@ -3,24 +3,26 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Login from "./Login/Login";
 import Feed from "./Feed/Feed";
+import CreateSpot from "./CreateSpot/CreateSpot";
 import history from "../history";
 
 const App = (): React.ReactElement => {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(localStorage.getItem("loggedIn"));
 
-  const handleLogin = (): void => {
-    setUser(true);
+  const handleLogin = (username: string): void => {
+    localStorage.setItem("loggedIn", username);
+    setUser(localStorage.getItem("loggedIn"));
     history.push("/feed");
   };
 
   const handleLogout = (): void => {
-    setUser(false);
+    setUser(null);
     history.push("/login");
+    localStorage.removeItem("loggedIn");
   };
 
   return (
-    <div className="ui container">
-      <h1>Welcome to Swim Spots!</h1>
+    <div className="main ui container">
       <Router history={history}>
         <Switch>
           <Route exact path="/">
@@ -36,7 +38,12 @@ const App = (): React.ReactElement => {
           <Route
             exact
             path="/login"
-            render={() => <Login handleLogin={handleLogin} status={user} />}
+            render={() => <Login handleLogin={handleLogin} />}
+          />
+          <Route
+            exact
+            path="/create"
+            render={() => <CreateSpot user={user} />}
           />
         </Switch>
       </Router>
