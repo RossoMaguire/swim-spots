@@ -1,6 +1,11 @@
 import React from "react";
 
-const SearchPanel = (): React.ReactElement => {
+interface ISearchPanelProps {
+  handleSearch: React.ChangeEventHandler;
+  searchBy: string;
+}
+
+const SearchPanel = (props: ISearchPanelProps): React.ReactElement => {
   return (
     <div className="item">
       <div className="ui search">
@@ -8,7 +13,8 @@ const SearchPanel = (): React.ReactElement => {
           <input
             className="prompt"
             type="text"
-            placeholder="Search Swim Spots..."
+            placeholder={`Search by ${props.searchBy}`}
+            onChange={(e) => props.handleSearch(e)}
           />
           <i className="search icon"></i>
         </div>

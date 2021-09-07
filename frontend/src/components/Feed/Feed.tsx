@@ -5,7 +5,7 @@ import SearchPanel from "./SearchPanel";
 import SortPanel from "./SortPanel";
 import SwimPanel from "./SwimPanel";
 
-interface ISwimSpot {
+export interface ISwimSpot {
   name: string;
   county: string;
   description: string;
@@ -20,6 +20,7 @@ interface IFeedProps {
 
 const Feed = (props: IFeedProps): React.ReactElement => {
   const [swimSpots, setSwimSpots] = useState([] as ISwimSpot[]);
+  const [filteredSpots, setFilteredSpots] = useState(swimSpots);
   const [order, setOrder] = useState(true);
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
         console.log(res);
         console.log(res.data);
         setSwimSpots(res.data);
+        setFilteredSpots(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -37,11 +39,29 @@ const Feed = (props: IFeedProps): React.ReactElement => {
 
   useEffect(() => {
     order
-      ? swimSpots.sort(dynamicSort("name"))
-      : swimSpots.sort(dynamicSort("-name"));
-  }, [order, swimSpots]);
+      ? filteredSpots.sort(dynamicSort("name"))
+      : filteredSpots.sort(dynamicSort("-name"));
+  }, [order, filteredSpots]);
 
   const toggleOrder = (): void => setOrder((value) => !value);
+
+  const handleNameSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.toLowerCase();
+    let result = [];
+    result = swimSpots.filter((spot) => {
+      return spot.name.toLowerCase().search(value) !== -1;
+    });
+    setFilteredSpots(result);
+  };
+
+  const handleCountySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.toLowerCase();
+    let result = [];
+    result = swimSpots.filter((spot) => {
+      return spot.county.toLowerCase().search(value) !== -1;
+    });
+    setFilteredSpots(result);
+  };
 
   return (
     <div className="ui grid container">
@@ -50,7 +70,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
       </div>
       <div className="ten wide column">
         <div className="ui items">
-          {swimSpots.map((spot) => (
+          {filteredSpots.map((spot) => (
             <SwimPanel
               key={spot.name}
               name={spot.name}
@@ -64,10 +84,13 @@ const Feed = (props: IFeedProps): React.ReactElement => {
         </div>
       </div>
       <div className="six wide column">
-        <p onClick={props.handleLogout} style={{ cursor: "pointer" }}>
-          Logout
-        </p>
-        <SearchPanel />
+        <div className="item">
+          <p onClick={props.handleLogout} style={{ cursor: "pointer" }}>
+            Logout
+          </p>
+        </div>
+        <SearchPanel handleSearch={handleNameSearch} searchBy="Name" />
+        <SearchPanel handleSearch={handleCountySearch} searchBy="County" />
         <SortPanel order={order} toggleOrder={toggleOrder} />
         <p>
           <a href="/create">Add a New Swim Spot</a>

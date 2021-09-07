@@ -71,7 +71,7 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
           {props.name}
         </a>
         <div className="meta">
-          <span>Description</span>
+          <span>{props.county}</span>
         </div>
         <div className="description">
           <p>{props.desc}</p>
