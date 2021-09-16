@@ -71,15 +71,18 @@ const Feed = (props: IFeedProps): React.ReactElement => {
 
   // name search mechanism
   const handleNameSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // as the user types the value in the search field gets sent here
     let value = e.target.value.toLowerCase();
-    let result = [];
+    let result = []; // setup a new array to store the filtered spots
     result = swimSpots.filter((spot) => {
+      // use the filter and search JS utilitly functions to
+      // create a new array of objects with the result
       return spot.name.toLowerCase().search(value) !== -1;
     });
     setFilteredSpots(result);
   };
 
-  // county search mechanism
+  // county search mechanism - see explanation for handle name search
   const handleCountySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.toLowerCase();
     let result = [];
