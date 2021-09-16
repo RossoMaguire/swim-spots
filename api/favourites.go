@@ -29,11 +29,11 @@ func GetAllFavourites(w http.ResponseWriter, r *http.Request) {
 // Will READ all favourites by user id
 func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	key := vars["user_id"]
+	key := vars["user_name"]
 
 	var favourites []models.Favourite
 
-	db.Connector.Find(&favourites, "user_id = ?", key)
+	db.Connector.Find(&favourites, "user_name = ?", key)
 	w.Header().Set("Content-Type", "application/json")
 	middleware.AddCorsHeader(w)
 	if r.Method == "OPTIONS" {

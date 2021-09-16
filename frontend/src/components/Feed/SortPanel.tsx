@@ -1,13 +1,8 @@
 import React from "react";
 
-interface IOrderProps {
-  toggleOrder: React.ChangeEventHandler;
-  order: boolean;
-}
-
 const SortPanel = (props: IOrderProps): React.ReactElement => {
   return (
-    <div className="item">
+    <div className="item" style={{ marginBottom: "40px" }}>
       <p>Order Alphabetically</p>
       <div className="ui toggle checkbox">
         <input type="checkbox" name="public" onChange={props.toggleOrder} />

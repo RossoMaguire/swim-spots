@@ -1,18 +1,14 @@
 import React from "react";
 
-interface ISearchPanelProps {
-  handleSearch: React.ChangeEventHandler;
-  searchBy: string;
-}
-
 const SearchPanel = (props: ISearchPanelProps): React.ReactElement => {
   return (
-    <div className="item">
+    <div className="item" style={{ marginBottom: "20px" }}>
       <div className="ui search">
         <div className="ui icon input">
           <input
             className="prompt"
             type="text"
+            name="searchBy"
             placeholder={`Search by ${props.searchBy}`}
             onChange={(e) => props.handleSearch(e)}
           />

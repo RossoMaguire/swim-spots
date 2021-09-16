@@ -1,66 +1,52 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/styles";
 
-interface ISwimPanelProps {
-  name: string;
-  county: string;
-  desc: string;
-  coordinates: string;
-  username: string;
-}
-
-type Fave = {
-  id: number;
-  user_name: string;
-  swim_spot_name: string;
-};
+const useStyles = makeStyles({
+  highlight: {
+    color: "pink",
+  },
+});
 
 const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
-  const [faves, setFaves] = useState([] as Fave[]);
-  const [faveCount, setFaveCount] = useState(0);
+  const classes = useStyles();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8090/api/favourites")
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data);
-        setFaves(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const [faveCount, setFaveCount] = useState(0);
+  const [favedByUser, setFavedByUser] = useState(false);
 
   useEffect(() => {
     const countFaves = (): number => {
-      const amount = faves.filter((fave) =>
+      const amount = props.faves.filter((fave) =>
         Object.values(fave).includes(props.name)
       ).length;
       return amount;
     };
     setFaveCount(countFaves());
-  }, [faves, props.name]);
+  }, [props.faves, props.name]);
 
-  const postFavourite = () => {
-    axios
-      .post("http://localhost:8090/api/favourites/create", {
-        user_name: props.username,
-        swim_spot_name: props.name,
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        setFaveCount(faveCount + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const postFavourite = (): void => {
+    if (favedByUser) {
+      return;
+    } else {
+      axios
+        .post("http://localhost:8090/api/favourites/create", {
+          user_name: props.currentUser,
+          swim_spot_name: props.name,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          setFaveCount(faveCount + 1);
+          setFavedByUser(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
-    <div className="item">
+    <div className="item" style={{ marginBottom: "40px" }}>
       <div className="content">
         <a
           className="header"
@@ -89,7 +75,11 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
           <span
             onClick={postFavourite}
             style={{ cursor: "pointer" }}
-          >{`${faveCount} favourites`}</span>
+            className={favedByUser ? classes.highlight : undefined}
+          >
+            <i className="heart icon"></i>
+            {`${faveCount} favourites`}
+          </span>
           {` | Posted by ${props.username}`}
         </div>
       </div>

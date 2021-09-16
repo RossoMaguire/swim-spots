@@ -31,9 +31,8 @@ const App = (): React.ReactElement => {
           <ProtectedRoute
             exact
             path="/feed"
-            handleLogout={handleLogout}
             user={user}
-            component={Feed}
+            component={() => <Feed user={user} handleLogout={handleLogout} />}
           />
           <Route
             exact

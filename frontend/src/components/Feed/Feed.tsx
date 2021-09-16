@@ -4,24 +4,23 @@ import dynamicSort from "../utils/DynamicSort";
 import SearchPanel from "./SearchPanel";
 import SortPanel from "./SortPanel";
 import SwimPanel from "./SwimPanel";
+import Logout from "./Logout";
+import { makeStyles } from "@material-ui/styles";
 
-export interface ISwimSpot {
-  name: string;
-  county: string;
-  description: string;
-  coordinates: string;
-  favourites: number;
-  user_name: string;
-}
-
-interface IFeedProps {
-  handleLogout: React.MouseEventHandler;
-}
+const useStyles = makeStyles({
+  top: {
+    marginTop: "60px",
+  },
+});
 
 const Feed = (props: IFeedProps): React.ReactElement => {
+  const classes = useStyles();
+
   const [swimSpots, setSwimSpots] = useState([] as ISwimSpot[]);
   const [filteredSpots, setFilteredSpots] = useState(swimSpots);
   const [order, setOrder] = useState(true);
+  const [faves, setFaves] = useState([] as Fave[]);
+  const [userFaves, setUserFaves] = useState([] as Fave[]);
 
   useEffect(() => {
     axios
@@ -43,8 +42,34 @@ const Feed = (props: IFeedProps): React.ReactElement => {
       : filteredSpots.sort(dynamicSort("-name"));
   }, [order, filteredSpots]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8090/api/favourites")
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        console.log(res.data);
+        setFaves(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8090/api/favourites/${props.user}`)
+      .then((res) => {
+        setUserFaves(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [props.user]);
+
   const toggleOrder = (): void => setOrder((value) => !value);
 
+  // name search mechanism
   const handleNameSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.toLowerCase();
     let result = [];
@@ -54,6 +79,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
     setFilteredSpots(result);
   };
 
+  // county search mechanism
   const handleCountySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.toLowerCase();
     let result = [];
@@ -65,8 +91,11 @@ const Feed = (props: IFeedProps): React.ReactElement => {
 
   return (
     <div className="ui grid container">
-      <div className="sixteen wide column">
-        <h1>Welcome to Swim Spots!</h1>
+      <div className={`twelve wide column ${classes.top}`}>
+        <h1 className="ui dividing header">Welcome to Swim Spots!</h1>
+      </div>
+      <div className="four wide column">
+        <Logout user={props.user} handleLogout={props.handleLogout} />
       </div>
       <div className="ten wide column">
         <div className="ui items">
@@ -75,26 +104,28 @@ const Feed = (props: IFeedProps): React.ReactElement => {
               key={spot.name}
               name={spot.name}
               desc={spot.description}
-              // sanitze coordinates string
+              // sanitize coordinates string
               coordinates={spot.coordinates.replace(/\s/g, "")}
               county={spot.county}
               username={spot.user_name}
+              faves={faves}
+              userFaves={userFaves}
+              currentUser={props.user}
             />
           ))}
         </div>
       </div>
       <div className="six wide column">
-        <div className="item">
-          <p onClick={props.handleLogout} style={{ cursor: "pointer" }}>
-            Logout
-          </p>
-        </div>
         <SearchPanel handleSearch={handleNameSearch} searchBy="Name" />
         <SearchPanel handleSearch={handleCountySearch} searchBy="County" />
         <SortPanel order={order} toggleOrder={toggleOrder} />
-        <p>
-          <a href="/create">Add a New Swim Spot</a>
-        </p>
+
+        <a href="/create">
+          <button className="ui primary button">
+            <i className="add icon"></i>
+            Add a New Swim Spot
+          </button>
+        </a>
       </div>
     </div>
   );

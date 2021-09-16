@@ -1,11 +1,21 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 
 interface ILogin {
   handleLogin: Function;
 }
 
+const useStyles = makeStyles({
+  centeredForm: {
+    margin: "0 auto",
+    width: "70%",
+  },
+});
+
 const Login = (props: ILogin): React.ReactElement => {
+  const classes = useStyles();
+
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -48,7 +58,10 @@ const Login = (props: ILogin): React.ReactElement => {
           />
           <div className="content">Login to Swim Spots</div>
         </h2>
-        <form className="ui large form" onSubmit={handleSubmit}>
+        <form
+          className={`ui large form ${classes.centeredForm}`}
+          onSubmit={handleSubmit}
+        >
           <div className="ui stacked segment">
             <div className="field">
               <div className="ui left icon input">
