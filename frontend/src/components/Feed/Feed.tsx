@@ -38,12 +38,6 @@ const Feed = (props: IFeedProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    order
-      ? filteredSpots.sort(dynamicSort("name"))
-      : filteredSpots.sort(dynamicSort("-name"));
-  }, [order, filteredSpots]);
-
-  useEffect(() => {
     axios
       .get("http://localhost:8090/api/favourites")
       .then((res) => {
@@ -68,7 +62,12 @@ const Feed = (props: IFeedProps): React.ReactElement => {
       });
   }, [props.user]);
 
-  const toggleOrder = (): void => setOrder((value) => !value);
+  const toggleOrder = (): void => {
+    setOrder((value: boolean) => !value);
+    order
+      ? filteredSpots.sort(dynamicSort("name"))
+      : filteredSpots.sort(dynamicSort("-name"));
+  };
 
   // name search mechanism
   const handleNameSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
