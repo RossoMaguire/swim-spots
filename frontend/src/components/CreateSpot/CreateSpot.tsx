@@ -63,12 +63,11 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
     }
   };
 
-  const validateForm = () => {
-    let valid: boolean = false;
+  const validateForm = (): boolean => {
     if (name === "" || desc === "" || county === "" || coordinates === "") {
-      valid = true;
+      return false;
     }
-    return valid;
+    return true;
   };
 
   return (
