@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import history from "../../history";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   top: {
@@ -73,7 +74,7 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
   return (
     <div className="ui grid container">
       <div className={`sixteen wide column ${classes.top}`}>
-        <h1>Post a Spot</h1>
+        <h1 className="ui dividing header">Post a Spot</h1>
       </div>
       <div className="ten wide column">
         <form className="ui large form" onSubmit={handleSubmit}>
@@ -138,6 +139,12 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
           right click to copy the coordinates. Just paste them as is in the
           field above.
         </p>
+        <Link to="/feed">
+          <button className="ui labeled icon button">
+            <i className="left chevron icon"></i>
+            Back
+          </button>
+        </Link>
       </div>
       <div className="six wide column">
         <img

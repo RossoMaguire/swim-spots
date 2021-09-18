@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-
-interface ILogin {
-  handleLogin: Function;
-}
+import history from "../../history";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   centeredForm: {
@@ -13,14 +11,29 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = (props: ILogin): React.ReactElement => {
+const Register = (): React.ReactElement => {
   const classes = useStyles();
 
   const [username, setUserName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
+  };
+
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,18 +44,21 @@ const Login = (props: ILogin): React.ReactElement => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8090/api/users/login", {
+      .post("http://localhost:8090/api/users/register", {
         user_name: username,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
         password: password,
       })
       .then((res) => {
         console.log(res);
         console.log(res.data);
-        props.handleLogin(res.data.user_name);
+        history.push("/login");
       })
       .catch((err) => {
         console.log(err);
-        const msg = document.getElementById("login-error-msg");
+        const msg = document.getElementById("register-error-msg");
         msg!.style.display = "block";
       });
   };
@@ -56,7 +72,7 @@ const Login = (props: ILogin): React.ReactElement => {
             src="assets/images/wave.png"
             className="image"
           />
-          <div className="content">Login to Swim Spots</div>
+          <div className="content">Register for Swim Spots</div>
         </h2>
         <form
           className={`ui large form ${classes.centeredForm}`}
@@ -71,6 +87,36 @@ const Login = (props: ILogin): React.ReactElement => {
                   name="username"
                   placeholder="Username"
                   onChange={handleUserNameChange}
+                  required
+                />
+              </div>
+              <div className="ui left icon input">
+                <i className="user icon"></i>
+                <input
+                  type="text"
+                  name="first-name"
+                  placeholder="First Name"
+                  onChange={handleFirstNameChange}
+                  required
+                />
+              </div>
+              <div className="ui left icon input">
+                <i className="user icon"></i>
+                <input
+                  type="text"
+                  name="last-name"
+                  placeholder="Last Name"
+                  onChange={handleLastNameChange}
+                  required
+                />
+              </div>
+              <div className="ui left icon input">
+                <i className="mail icon"></i>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  onChange={handleEmailChange}
                   required
                 />
               </div>
@@ -89,13 +135,17 @@ const Login = (props: ILogin): React.ReactElement => {
             </div>
             <input
               type="submit"
-              value="Login"
+              value="Register"
               className="ui fluid large teal submit button"
             />
+            <p style={{ marginTop: "40px" }}>
+              if you already have an account you can{" "}
+              <Link to="/login">Login here</Link>
+            </p>
           </div>
 
-          <div id="login-error-msg" className="ui error message">
-            Sorry - that user doesn't exist
+          <div id="register-error-msg" className="ui error message">
+            Sorry - please fill out all fields
           </div>
         </form>
       </div>
@@ -103,4 +153,4 @@ const Login = (props: ILogin): React.ReactElement => {
   );
 };
 
-export default Login;
+export default Register;

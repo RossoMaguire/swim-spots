@@ -11,6 +11,7 @@ func Router() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true);
 
 	// Handle User Registration & Login
+	router.HandleFunc("/api/users/register", api.CreateUser).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/users/login", api.CreateLoginByUserName).Methods("POST", "OPTIONS")
 
 	// CRUD Users

@@ -6,7 +6,9 @@ const SortPanel = (props: IOrderProps): React.ReactElement => {
       <p>Order Alphabetically</p>
       <div className="ui toggle checkbox">
         <input type="checkbox" name="public" onChange={props.toggleOrder} />
-        <label>{`${props.order ? "Ascending" : "Descending"}`}</label>
+        <label>{`${
+          props.order ? "Currently: Descending" : "Currently: Ascending"
+        }`}</label>
       </div>
     </div>
   );

@@ -3,3 +3,4 @@ vendor
 .DS_Store
 .env
 frontend/node_modules
+db-help.txt

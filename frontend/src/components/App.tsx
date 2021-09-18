@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Login from "./Login/Login";
+import Register from "./Register/Register";
 import Feed from "./Feed/Feed";
 import CreateSpot from "./CreateSpot/CreateSpot";
 import history from "../history";
@@ -26,7 +27,7 @@ const App = (): React.ReactElement => {
       <Router history={history}>
         <Switch>
           <Route exact path="/">
-            {user ? <Redirect to="/feed" /> : <Redirect to="/login" />}
+            {user ? <Redirect to="/feed" /> : <Redirect to="/register" />}
           </Route>
           <ProtectedRoute
             exact
@@ -39,6 +40,7 @@ const App = (): React.ReactElement => {
             path="/login"
             render={() => <Login handleLogin={handleLogin} />}
           />
+          <Route exact path="/register" render={() => <Register />} />
           <Route
             exact
             path="/create"

@@ -24,6 +24,16 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
     setFaveCount(countFaves());
   }, [props.faves, props.name]);
 
+  useEffect(() => {
+    const isFavedByUser = props.userFaves.some((userFave: Fave) => {
+      return (
+        userFave["user_name"] === props.currentUser &&
+        userFave["swim_spot_name"] === props.name
+      );
+    });
+    setFavedByUser(isFavedByUser);
+  }, [props.currentUser, props.userFaves, props.name]);
+
   const postFavourite = (): void => {
     if (favedByUser) {
       return;

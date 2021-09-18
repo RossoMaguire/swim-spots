@@ -2,8 +2,11 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/RossoMaguire/swim-spots/api/middleware"
 	"github.com/RossoMaguire/swim-spots/db"
@@ -88,3 +91,34 @@ func CreateLoginByUserName(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Will CREATE a user
+func CreateUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
+    requestBody, _ := ioutil.ReadAll(r.Body)
+
+	var user models.User
+	err := json.Unmarshal(requestBody, &user)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// hash the password using the bcrypt lib
+	// The second argument is the cost of hashing, which is set as 8 (this value can be more or less, depending on the computing power needed)
+	hashed, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 8)
+
+	user.Password = string(hashed)
+	fmt.Println(user)
+
+	db.Connector.Create(&user)
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(user.UserName)
+	}
+}

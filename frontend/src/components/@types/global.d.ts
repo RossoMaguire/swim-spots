@@ -22,6 +22,8 @@ declare interface ISwimPanelProps {
   faves: Fave[];
   userFaves: Fave[];
   currentUser: string | null;
+  userFaves: Fave[];
+  currentUser: string | null;
 }
 
 declare interface ISearchPanelProps {

@@ -6,6 +6,7 @@ import SortPanel from "./SortPanel";
 import SwimPanel from "./SwimPanel";
 import Logout from "./Logout";
 import { makeStyles } from "@material-ui/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   top: {
@@ -123,12 +124,12 @@ const Feed = (props: IFeedProps): React.ReactElement => {
         <SearchPanel handleSearch={handleCountySearch} searchBy="County" />
         <SortPanel order={order} toggleOrder={toggleOrder} />
 
-        <a href="/create">
+        <Link to="/create">
           <button className="ui primary button">
             <i className="add icon"></i>
             Add a New Swim Spot
           </button>
-        </a>
+        </Link>
       </div>
     </div>
   );
