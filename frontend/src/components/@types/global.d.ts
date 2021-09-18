@@ -44,3 +44,8 @@ declare interface IFeedProps {
 declare interface ICreateSpotProps {
   user: string | null;
 }
+
+declare interface IUserNamePanelProps {
+  currentUser: string | null;
+  handleLogout: React.MouseEventHandler;
+}

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import dynamicSort from "../utils/DynamicSort";
+import UserNamePanel from "./UserNamePanel";
 import SearchPanel from "./SearchPanel";
 import SortPanel from "./SortPanel";
 import SwimPanel from "./SwimPanel";
-import Logout from "./Logout";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 
@@ -94,11 +94,8 @@ const Feed = (props: IFeedProps): React.ReactElement => {
 
   return (
     <div className="ui grid container">
-      <div className={`twelve wide column ${classes.top}`}>
-        <h1 className="ui dividing header">Welcome to Swim Spots!</h1>
-      </div>
-      <div className="four wide column">
-        <Logout user={props.user} handleLogout={props.handleLogout} />
+      <div className={`sixteen wide column ${classes.top}`}>
+        <h1 className="ui dividing header">Welcome to Swim Spots</h1>
       </div>
       <div className="ten wide column">
         <div className="ui items">
@@ -119,6 +116,10 @@ const Feed = (props: IFeedProps): React.ReactElement => {
         </div>
       </div>
       <div className="six wide column">
+        <UserNamePanel
+          currentUser={props.user}
+          handleLogout={props.handleLogout}
+        />
         <SearchPanel handleSearch={handleNameSearch} searchBy="Name" />
         <SearchPanel handleSearch={handleCountySearch} searchBy="County" />
         <SortPanel order={order} toggleOrder={toggleOrder} />

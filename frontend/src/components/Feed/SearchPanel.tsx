@@ -4,7 +4,7 @@ const SearchPanel = (props: ISearchPanelProps): React.ReactElement => {
   return (
     <div className="item" style={{ marginBottom: "20px" }}>
       <div className="ui search">
-        <div className="ui icon input">
+        <div className="ui icon input" style={{ width: "100%" }}>
           <input
             className="prompt"
             type="text"
