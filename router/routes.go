@@ -21,8 +21,8 @@ func Router() *mux.Router {
 
 	// CRUD Swim Spots
 	router.HandleFunc("/api/spots", api.GetAllSwimSpots).Methods("GET", "OPTIONS");
-	router.HandleFunc("/api/spots/{id}", api.GetSwimSpotById).Methods("GET", "OPTIONS");
 	router.HandleFunc("/api/spots/create", api.CreateSpot).Methods("POST", "OPTIONS");
+	router.HandleFunc("/api/spots/delete/{id}", api.DeleteSpot).Methods("DELETE", "OPTIONS");
 
 	// CRUD Favourites
     router.HandleFunc("/api/favourites", api.GetAllFavourites).Methods("GET", "OPTIONS");

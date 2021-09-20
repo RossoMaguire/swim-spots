@@ -27,7 +27,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
     axios
       .get("http://localhost:8090/api/spots")
       .then((res) => {
-        console.log(res);
+        console.log("Fetching SwimSpots");
         console.log(res.data);
         setSwimSpots(res.data);
         setFilteredSpots(res.data);
@@ -41,8 +41,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
     axios
       .get("http://localhost:8090/api/favourites")
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        console.log("Fetching Faves");
         console.log(res.data);
         setFaves(res.data);
       })
@@ -55,6 +54,8 @@ const Feed = (props: IFeedProps): React.ReactElement => {
     axios
       .get(`http://localhost:8090/api/favourites/${props.user}`)
       .then((res) => {
+        console.log("Fetching UserFaves");
+        console.log(res.data);
         setUserFaves(res.data);
       })
       .catch((err) => {
@@ -92,6 +93,11 @@ const Feed = (props: IFeedProps): React.ReactElement => {
     setFilteredSpots(result);
   };
 
+  const resetSwimSpots = async (newdata: ISwimSpot[]) => {
+    setSwimSpots(newdata);
+    setFilteredSpots(newdata);
+  };
+
   return (
     <div className="ui grid container">
       <div className={`sixteen wide column ${classes.top}`}>
@@ -102,6 +108,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
           {filteredSpots.map((spot) => (
             <SwimPanel
               key={spot.name}
+              id={spot.id}
               name={spot.name}
               desc={spot.description}
               // sanitize coordinates string
@@ -111,6 +118,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
               faves={faves}
               userFaves={userFaves}
               currentUser={props.user}
+              resetSwimSpots={resetSwimSpots}
             />
           ))}
         </div>

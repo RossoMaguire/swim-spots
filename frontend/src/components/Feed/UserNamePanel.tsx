@@ -17,11 +17,9 @@ const UserNamePanel = (props: IUserNamePanelProps) => {
         {`Logged in as: `}
         <b>{props.currentUser}</b>
       </p>
-      <p>
-        <div onClick={props.handleLogout} className={classes.logout}>
-          Logout
-        </div>
-      </p>
+      <div onClick={props.handleLogout} className={classes.logout}>
+        Logout
+      </div>
     </div>
   );
 };

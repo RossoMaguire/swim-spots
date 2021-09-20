@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
+import DeleteSwim from "./DeleteSwim";
 
 const useStyles = makeStyles({
   highlight: {
@@ -13,6 +14,7 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
 
   const [faveCount, setFaveCount] = useState(0);
   const [favedByUser, setFavedByUser] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   useEffect(() => {
     const countFaves = (): number => {
@@ -34,6 +36,10 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
     setFavedByUser(isFavedByUser);
   }, [props.currentUser, props.userFaves, props.name]);
 
+  useEffect(() => {
+    setShowDelete(props.username === props.currentUser);
+  }, [props.currentUser, props.username]);
+
   const postFavourite = (): void => {
     if (favedByUser) {
       return;
@@ -44,7 +50,7 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
           swim_spot_name: props.name,
         })
         .then((res) => {
-          console.log(res);
+          console.log("Creating Spot");
           console.log(res.data);
           setFaveCount(faveCount + 1);
           setFavedByUser(true);
@@ -56,8 +62,11 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
   };
 
   return (
-    <div className="item" style={{ marginBottom: "40px" }}>
+    <div className="item" style={{ width: "60%" }}>
       <div className="content">
+        {showDelete && (
+          <DeleteSwim resetSwimSpots={props.resetSwimSpots} id={props.id} />
+        )}
         <a
           className="header"
           href={`https://www.google.com/maps/search/?api=1&query=${props.coordinates}`}

@@ -34,13 +34,16 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
     setCoordinates(e.target.value);
   };
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const msg = document.getElementById("create-error-msg");
 
-    if (validateForm()) {
-      await axios
+    // validate form
+    if (name === "" || desc === "" || county === "" || coordinates === "") {
+      msg!.style.display = "block";
+    } else {
+      axios
         .post("http://localhost:8090/api/spots/create", {
           user_name: props.user,
           name: name,
@@ -49,25 +52,15 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
           coordinates: coordinates,
         })
         .then((res) => {
-          console.log(res);
+          console.log("Creating Spot");
           console.log(res.data);
+          history.push("/feed");
         })
         .catch((err) => {
           console.log(err);
           msg!.style.display = "block";
         });
-
-      history.push("/feed");
-    } else {
-      msg!.style.display = "block";
     }
-  };
-
-  const validateForm = (): boolean => {
-    if (name === "" || desc === "" || county === "" || coordinates === "") {
-      return false;
-    }
-    return true;
   };
 
   return (

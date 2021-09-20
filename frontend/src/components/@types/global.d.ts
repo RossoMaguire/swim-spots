@@ -5,6 +5,7 @@ declare type Fave = {
 };
 
 declare type ISwimSpot = {
+  id: number;
   name: string;
   county: string;
   description: string;
@@ -14,6 +15,7 @@ declare type ISwimSpot = {
 };
 
 declare interface ISwimPanelProps {
+  id: number;
   name: string;
   county: string;
   desc: string;
@@ -24,6 +26,7 @@ declare interface ISwimPanelProps {
   currentUser: string | null;
   userFaves: Fave[];
   currentUser: string | null;
+  resetSwimSpots: Function;
 }
 
 declare interface ISearchPanelProps {
@@ -48,4 +51,9 @@ declare interface ICreateSpotProps {
 declare interface IUserNamePanelProps {
   currentUser: string | null;
   handleLogout: React.MouseEventHandler;
+}
+
+declare interface IDeleteSwimProps {
+  id: number;
+  resetSwimSpots: Function;
 }
