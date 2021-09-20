@@ -63,6 +63,10 @@ const Feed = (props: IFeedProps): React.ReactElement => {
       });
   }, [props.user]);
 
+  useEffect(() => {
+    toggleOrder();
+  }, [filteredSpots]);
+
   const toggleOrder = (): void => {
     setOrder((value: boolean) => !value);
     order
