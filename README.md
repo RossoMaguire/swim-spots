@@ -43,6 +43,11 @@ yarn start
 ```
 
 Visit the frontend UI on `localhost:3000` to use the website.
-An example account login can be found in the report.
+An example account login can be:
+
+```
+Username: rossmag17
+Password: test
+```
 
 To make API requests via curl or Postman, refer to the endpoints in `routes.go`.
