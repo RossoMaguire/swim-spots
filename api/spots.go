@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -22,11 +23,7 @@ func GetAllSwimSpots(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(spots)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(spots)
 	}
 }
 
@@ -41,21 +38,14 @@ func CreateSpot(w http.ResponseWriter, r *http.Request) {
 	} else {
 	requestBody, _ := ioutil.ReadAll(r.Body)
 	var spot models.Spot
-	err := json.Unmarshal(requestBody, &spot)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	return
-	}
+	json.Unmarshal(requestBody, &spot)
+	fmt.Println("Api Called")
 
 	db.Connector.Create(&spot)
 	w.Header().Set("Content-Type", "application/json")
 
 	w.WriteHeader(http.StatusCreated)
-	err = json.NewEncoder(w).Encode(spot)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(spot)
 	}
 }
 
@@ -66,12 +56,7 @@ func DeleteSpot(w http.ResponseWriter, r *http.Request) {
 	key := vars["id"]
 
 	var spot models.Spot
-	err := db.Connector.Delete(&spot, key)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
-
+	db.Connector.Delete(&spot, key)
 	w.Header().Set("Content-Type", "application/json")
 	middleware.AddCorsHeader(w)
 	if r.Method == "OPTIONS" {
@@ -81,10 +66,6 @@ func DeleteSpot(w http.ResponseWriter, r *http.Request) {
     var spots []models.Spot
 	db.Connector.Find(&spots)
 	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(spots)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(spots)
 	}
 }

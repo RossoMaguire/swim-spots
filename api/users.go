@@ -28,11 +28,7 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	db.Connector.Find(&users)
 	w.Header().Set("Content-Type", "application/json")
 	middleware.AddCorsHeader(w)
-	err := json.NewEncoder(w).Encode(users)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(users)
 
 	}
 }
@@ -51,13 +47,8 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 
 	var user []models.User
 	db.Connector.Find(&user, key)
-	
 	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(user)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(user)
 	}
 }
 
@@ -95,11 +86,7 @@ func CreateLoginByUserName(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	err = json.NewEncoder(w).Encode(user)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(user)
 
 	}
 }
@@ -132,10 +119,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	db.Connector.Create(&user)
 
 	w.WriteHeader(http.StatusCreated)
-	err = json.NewEncoder(w).Encode(user.UserName)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(user.UserName)
 	}
 }

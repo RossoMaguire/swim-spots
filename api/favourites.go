@@ -14,25 +14,16 @@ import (
 // Will READ all favourites
 func GetAllFavourites(w http.ResponseWriter, r *http.Request) {
 	var favourites []models.Favourite
-	err := db.Connector.Find(&favourites)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	return
-	} 
+	db.Connector.Find(&favourites)
 	w.Header().Set("Content-Type", "application/json")
 	middleware.AddCorsHeader(w)
 	if r.Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
 		return
 	} else {
-
 	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(favourites)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
-	}
+	json.NewEncoder(w).Encode(favourites)
+    }
 }
 
 // Will READ all favourites by user id
@@ -42,11 +33,7 @@ func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 
 	var favourites []models.Favourite
 
-	err := db.Connector.Find(&favourites, "user_name = ?", key)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	return
-	} 
+	db.Connector.Find(&favourites, "user_name = ?", key)
 	w.Header().Set("Content-Type", "application/json")
 	middleware.AddCorsHeader(w)
 	if r.Method == "OPTIONS" {
@@ -54,11 +41,7 @@ func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(favourites)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(favourites)
 	}
 }
 
@@ -66,11 +49,7 @@ func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 func CreateFavourite(w http.ResponseWriter, r *http.Request) {
 	requestBody, _ := ioutil.ReadAll(r.Body)
 	var favourite models.Favourite
-	err := json.Unmarshal(requestBody, &favourite)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	return
-	} 
+	json.Unmarshal(requestBody, &favourite)
 
 	db.Connector.Create(&favourite)
     w.Header().Set("Content-Type", "application/json")
@@ -80,10 +59,6 @@ func CreateFavourite(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 	w.WriteHeader(http.StatusCreated)
-	err = json.NewEncoder(w).Encode(favourite)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-	    return
-	} 
+	json.NewEncoder(w).Encode(favourite)
 	}
 }
