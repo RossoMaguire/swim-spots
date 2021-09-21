@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
-import DeleteSwim from "./DeleteSwim";
+import DeleteSpot from "./DeleteSpot";
 
 const useStyles = makeStyles({
   highlight: {
@@ -65,7 +65,7 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
     <div className="item" style={{ width: "60%" }}>
       <div className="content">
         {showDelete && (
-          <DeleteSwim resetSwimSpots={props.resetSwimSpots} id={props.id} />
+          <DeleteSpot resetSwimSpots={props.resetSwimSpots} id={props.id} />
         )}
         <a
           className="header"

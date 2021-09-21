@@ -98,7 +98,7 @@ const Feed = (props: IFeedProps): React.ReactElement => {
   };
 
   const resetSwimSpots = async (newdata: ISwimSpot[]) => {
-    setSwimSpots(newdata);
+    await setSwimSpots(newdata);
     setFilteredSpots(newdata);
   };
 
