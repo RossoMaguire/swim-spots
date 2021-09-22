@@ -1,5 +1,5 @@
 export interface ICreateSpotPayload {
-  user_name: string;
+  user_name: string | null;
   name: string;
   description: string;
   county: string;

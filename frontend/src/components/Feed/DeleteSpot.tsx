@@ -37,11 +37,15 @@ const DeleteSwim = (props: IDeleteSpotProps) => {
   return (
     <Modal
       trigger={
-        <i className={`trash alternate outline icon ${classes.delete}`}></i>
+        <i
+          className={`trash alternate outline icon ${classes.delete}`}
+          data-testid="deleteBtn"
+        ></i>
       }
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
+      data-testid="deleteModal"
     >
       <Modal.Header>Delete Swim Spot</Modal.Header>
       <Modal.Description>
@@ -58,6 +62,7 @@ const DeleteSwim = (props: IDeleteSpotProps) => {
           labelPosition="right"
           icon="checkmark"
           onClick={deleteSpot}
+          data-testid="deleteBtn"
           positive
         />
       </Modal.Actions>

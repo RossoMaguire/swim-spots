@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import ApiClient from "../repositories/ApiClient";
 
-interface ILogin {
-  handleLogin: Function;
-}
-
 const useStyles = makeStyles({
   centeredForm: {
     margin: "0 auto",
@@ -13,7 +9,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = (props: ILogin): React.ReactElement => {
+const Login = (props: ILoginProps): React.ReactElement => {
   const classes = useStyles();
 
   const [username, setUserName] = useState("");
@@ -32,21 +28,28 @@ const Login = (props: ILogin): React.ReactElement => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    client
-      .createLogin("users/login", {
-        user_name: username,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        props.handleLogin(res.data.user_name);
-      })
-      .catch((err) => {
-        console.log(err);
-        const msg = document.getElementById("login-error-msg");
-        msg!.style.display = "block";
-      });
+    const msg = document.getElementById("login-error-msg");
+
+    // validate form
+    if (username === "" || password === "") {
+      msg!.style.display = "block";
+    } else {
+      client
+        .createLogin("users/login", {
+          user_name: username,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          props.handleLogin(res.data.user_name);
+        })
+        .catch((err) => {
+          console.log(err);
+          const msg = document.getElementById("login-error-msg");
+          msg!.style.display = "block";
+        });
+    }
   };
 
   return (
@@ -73,6 +76,7 @@ const Login = (props: ILogin): React.ReactElement => {
                   name="username"
                   placeholder="Username"
                   onChange={handleUserNameChange}
+                  data-testid="loginField"
                   required
                 />
               </div>
@@ -85,6 +89,7 @@ const Login = (props: ILogin): React.ReactElement => {
                   name="password"
                   placeholder="Password"
                   onChange={handlePasswordChange}
+                  data-testId="loginField"
                   required
                 />
               </div>
@@ -93,6 +98,7 @@ const Login = (props: ILogin): React.ReactElement => {
               type="submit"
               value="Login"
               className="ui fluid large teal submit button"
+              data-testId="loginBtn"
             />
           </div>
 

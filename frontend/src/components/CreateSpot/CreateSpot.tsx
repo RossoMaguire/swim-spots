@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import axios from "axios";
 import history from "../../history";
 import { Link } from "react-router-dom";
+import ApiClient from "../repositories/ApiClient";
 
 const useStyles = makeStyles({
   top: {
@@ -17,6 +17,8 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
   const [desc, setDesc] = useState("");
   const [county, setCounty] = useState("");
   const [coordinates, setCoordinates] = useState("");
+
+  const client = new ApiClient();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -43,8 +45,8 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
     if (name === "" || desc === "" || county === "" || coordinates === "") {
       msg!.style.display = "block";
     } else {
-      axios
-        .post("http://localhost:8090/api/spots/create", {
+      client
+        .createSpot("spots/create", {
           user_name: props.user,
           name: name,
           description: desc,
@@ -78,6 +80,7 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
                   name="name"
                   placeholder="Name"
                   onChange={handleNameChange}
+                  data-testid="createField"
                   required
                 />
               </div>
@@ -89,6 +92,7 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
                   name="description"
                   placeholder="Description"
                   onChange={handleDescChange}
+                  data-testid="createField"
                   required
                 />
               </div>
@@ -100,6 +104,7 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
                   name="county"
                   placeholder="County"
                   onChange={handleCountyChange}
+                  data-testid="createField"
                   required
                 />
               </div>
@@ -111,12 +116,14 @@ const CreateSpot = (props: ICreateSpotProps): React.ReactElement => {
                   name="coordinates"
                   placeholder="Coordinates"
                   onChange={handleCoordinatesChange}
+                  data-testid="createField"
                   required
                 />
               </div>
             </div>
             <input
               type="submit"
+              data-testid="createBtn"
               value="Create"
               className="ui fluid large teal submit button"
             />

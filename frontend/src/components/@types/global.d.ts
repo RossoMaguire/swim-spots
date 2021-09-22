@@ -24,8 +24,6 @@ declare interface ISwimPanelProps {
   faves: Fave[];
   userFaves: Fave[];
   currentUser: string | null;
-  userFaves: Fave[];
-  currentUser: string | null;
   resetSwimSpots: Function;
 }
 
@@ -56,4 +54,8 @@ declare interface IUserNamePanelProps {
 declare interface IDeleteSpotProps {
   id: number;
   resetSwimSpots: Function;
+}
+
+declare interface ILoginProps {
+  handleLogin: Function;
 }

@@ -45,24 +45,37 @@ const Register = (): React.ReactElement => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    client
-      .createRegister("users/register", {
-        user_name: username,
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        history.push("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-        const msg = document.getElementById("register-error-msg");
-        msg!.style.display = "block";
-      });
+    const msg = document.getElementById("register-error-msg");
+
+    // validate form
+    if (
+      username === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password === ""
+    ) {
+      msg!.style.display = "block";
+    } else {
+      client
+        .createRegister("users/register", {
+          user_name: username,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          history.push("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+          const msg = document.getElementById("register-error-msg");
+          msg!.style.display = "block";
+        });
+    }
   };
 
   return (
@@ -89,6 +102,7 @@ const Register = (): React.ReactElement => {
                   name="username"
                   placeholder="Username"
                   onChange={handleUserNameChange}
+                  data-testid="registerField"
                   required
                 />
               </div>
@@ -99,6 +113,7 @@ const Register = (): React.ReactElement => {
                   name="first-name"
                   placeholder="First Name"
                   onChange={handleFirstNameChange}
+                  data-testid="registerField"
                   required
                 />
               </div>
@@ -109,6 +124,7 @@ const Register = (): React.ReactElement => {
                   name="last-name"
                   placeholder="Last Name"
                   onChange={handleLastNameChange}
+                  data-testid="registerField"
                   required
                 />
               </div>
@@ -117,8 +133,9 @@ const Register = (): React.ReactElement => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="Email"
                   onChange={handleEmailChange}
+                  data-testid="registerField"
                   required
                 />
               </div>
@@ -131,6 +148,7 @@ const Register = (): React.ReactElement => {
                   name="password"
                   placeholder="Password"
                   onChange={handlePasswordChange}
+                  data-testid="registerField"
                   required
                 />
               </div>
@@ -139,6 +157,7 @@ const Register = (): React.ReactElement => {
               type="submit"
               value="Register"
               className="ui fluid large teal submit button"
+              data-testId="registerBtn"
             />
             <p style={{ marginTop: "40px" }}>
               if you already have an account you can{" "}
