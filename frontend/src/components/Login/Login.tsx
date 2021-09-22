@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
+import ApiClient from "../repositories/ApiClient";
 
 interface ILogin {
   handleLogin: Function;
@@ -19,6 +19,8 @@ const Login = (props: ILogin): React.ReactElement => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  const client = new ApiClient();
+
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
@@ -30,8 +32,8 @@ const Login = (props: ILogin): React.ReactElement => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:8090/api/users/login", {
+    client
+      .createLogin("users/login", {
         user_name: username,
         password: password,
       })

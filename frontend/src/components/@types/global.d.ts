@@ -53,7 +53,7 @@ declare interface IUserNamePanelProps {
   handleLogout: React.MouseEventHandler;
 }
 
-declare interface IDeleteSwimProps {
+declare interface IDeleteSpotProps {
   id: number;
   resetSwimSpots: Function;
 }

@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import history from "../../history";
 import { Link } from "react-router-dom";
+import ApiClient from "../repositories/ApiClient";
 
 const useStyles = makeStyles({
   centeredForm: {
@@ -19,6 +19,8 @@ const Register = (): React.ReactElement => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const client = new ApiClient();
 
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
@@ -43,8 +45,8 @@ const Register = (): React.ReactElement => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:8090/api/users/register", {
+    client
+      .createRegister("users/register", {
         user_name: username,
         first_name: firstName,
         last_name: lastName,

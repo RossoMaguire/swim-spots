@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Button, Modal } from "semantic-ui-react";
-import axios from "axios";
+import ApiClient from "../repositories/ApiClient";
 
 const useStyles = makeStyles({
   delete: {
@@ -13,12 +13,14 @@ const useStyles = makeStyles({
   },
 });
 
-const DeleteSwim = (props: IDeleteSwimProps) => {
+const DeleteSwim = (props: IDeleteSpotProps) => {
   const [open, setOpen] = useState(false);
 
+  const client = new ApiClient();
+
   const deleteSpot = () => {
-    axios
-      .delete(`http://localhost:8090/api/spots/delete/${props.id}`)
+    client
+      .deleteSpot(`spots/delete/${props.id}`)
       .then((res) => {
         console.log("Deleting Spot");
         console.log(res.data);

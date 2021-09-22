@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import dynamicSort from "../utils/DynamicSort";
 import UserNamePanel from "./UserNamePanel";
 import SearchPanel from "./SearchPanel";
@@ -7,6 +6,7 @@ import SortPanel from "./SortPanel";
 import SwimPanel from "./SwimPanel";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
+import ApiClient from "../repositories/ApiClient";
 
 const useStyles = makeStyles({
   top: {
@@ -23,9 +23,11 @@ const Feed = (props: IFeedProps): React.ReactElement => {
   const [faves, setFaves] = useState([] as Fave[]);
   const [userFaves, setUserFaves] = useState([] as Fave[]);
 
+  const client = new ApiClient();
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8090/api/spots")
+    client
+      .getSpots("spots")
       .then((res) => {
         console.log("Fetching SwimSpots");
         console.log(res.data);
@@ -38,8 +40,8 @@ const Feed = (props: IFeedProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8090/api/favourites")
+    client
+      .getFavourites("favourites")
       .then((res) => {
         console.log("Fetching Faves");
         console.log(res.data);
@@ -51,8 +53,8 @@ const Feed = (props: IFeedProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8090/api/favourites/${props.user}`)
+    client
+      .getUserFavourites(`favourites/${props.user}`)
       .then((res) => {
         console.log("Fetching UserFaves");
         console.log(res.data);
