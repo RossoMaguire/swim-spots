@@ -4,15 +4,19 @@ Swim Spots is an application which allows users to post co-ordinates of awesome 
 
 ### Built With
 
-API and backend is built with Go 1.16.6.
-Remote DB is built with Postres and hosted with Heroku.
-Frontend is built with React and TypeScript.
+```
+API and backend : Go 1.16.6.
+Cloud DB : Postgres hosted with Heroku.
+Frontend : React and TypeScript.
+```
 
 ## Getting Started -- follow these steps to run locally
 
-1. Clone this repo and then cd into the base directory. From there run `go mod vendor` to install dependencies.
+_Please ensure you have GO and Node installed on your machine_
 
-2. To install frontend dependencies cd into frontend and from there run `npm install` ot `yarn`.
+1. Clone this repo and then `cd swim spots`. From there run `go mod vendor` to install dependencies.
+
+2. To install frontend dependencies `cd frontend` and from there run `npm install` or `yarn`.
 
 3. The DB connection reads from Environment variables for connecting to the database which is hosted on Heroku.
    Create a .env file in the base directory - refer to the report for the values you will need for these keys :
@@ -36,18 +40,18 @@ To open the connection to the db and to run the api & web server :
 ```
 cd swim-spots
 go run main.go
-
 ```
 
-Visit the build UI on `localhost:8090` to use the website.
+Visit the build on `localhost:8090` to use the website.
 
-An example account login can be:
+An example account login can be :
 
 ```
 Username: rossmag17
 Password: test
-
 ```
+
+_logging in with a register account won't work as passwords are hashed on register, but not for the test accounts, and retreving a hash has not been included_
 
 ### Testing
 
@@ -56,27 +60,26 @@ To run tests
 ```
 cd frontend
 npm test FileName.test.js
-
 ```
 
-**Example:** `npm test CreateSpot.test.js`
+_Example :_ `npm test CreateSpot.test.js`
 
-To make API requests via curl or Postman, refer to the endpoints in `routes.go`.
+To make API requests via curl or Postman, refer to the endpoints in :
+
+`routes.go`.
 
 ### Development
 
-To start the frontend in development:
+To start the frontend in development :
 
 ```
 cd frontend
 yarn start
-
 ```
 
-Whenever there are changes made to the backend or api (GO files) you need to restart the server
+Whenever there are changes made to the backend or api (GO files) you need to restart the server :
 
 ```
 cd swim-spots
 go run main.go
-
 ```
