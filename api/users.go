@@ -119,6 +119,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	db.Connector.Create(&user)
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(user.UserName)
+	json.NewEncoder(w).Encode(user)
 	}
 }

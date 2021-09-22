@@ -39,7 +39,6 @@ describe("Register Api", () => {
       first_name: "Ross",
       last_name: "Maguire",
       email: "ross@example.com",
-      password: "test",
     };
 
     axios.post.mockImplementationOnce(() => Promise.resolve(data));
