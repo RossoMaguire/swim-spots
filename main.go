@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -25,14 +26,19 @@ func main() {
 	
 	r.PathPrefix("/").Handler(spa)
 
-	log.Fatal(http.ListenAndServe(":8090", r))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8090" // Default port if not specified
+	}
+
+	log.Fatal(http.ListenAndServe(":" + port, r))
 }
 
 func initDB() {
 	// Connect to godotenv
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println("No .env file")
 	}
   
 	// Grabbing env variables for connection string using godotenv
