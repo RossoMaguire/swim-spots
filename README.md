@@ -2,6 +2,15 @@
 
 Swim Spots is an application which allows users to post co-ordinates of awesome places they find around Ireland for a swim. Users can login to the app to share a spot, access all other users shared swim spots, favourite certain swim spots and find co-ordinates.
 
+_View a production build on Heroku :_ https://swim-spots.herokuapp.com/login
+
+An example account login can be :
+
+```
+Username: rossmag17
+Password: test
+```
+
 ### Built With
 
 ```
