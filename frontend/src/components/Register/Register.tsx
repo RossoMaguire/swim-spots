@@ -157,7 +157,7 @@ const Register = (): React.ReactElement => {
               type="submit"
               value="Register"
               className="ui fluid large teal submit button"
-              data-testId="registerBtn"
+              data-testid="registerBtn"
             />
             <p style={{ marginTop: "40px" }}>
               if you already have an account you can{" "}

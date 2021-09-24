@@ -89,7 +89,7 @@ const Login = (props: ILoginProps): React.ReactElement => {
                   name="password"
                   placeholder="Password"
                   onChange={handlePasswordChange}
-                  data-testId="loginField"
+                  data-testid="loginField"
                   required
                 />
               </div>
@@ -98,7 +98,7 @@ const Login = (props: ILoginProps): React.ReactElement => {
               type="submit"
               value="Login"
               className="ui fluid large teal submit button"
-              data-testId="loginBtn"
+              data-testid="loginBtn"
             />
           </div>
 
