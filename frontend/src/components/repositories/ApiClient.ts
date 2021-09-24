@@ -17,7 +17,7 @@ class ApiClient {
    * Change this to call local vs production API - should ideally move to env variable
   // baseUrl: string = "http://localhost:8090/api/"; // local
   */
-  baseUrl: string = "https://swim-spots.herokuapp.com/"; // production
+  baseUrl: string = "https://swim-spots.herokuapp.com/api/"; // production
 
   // post
   createSpot = (
