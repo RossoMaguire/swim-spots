@@ -1,4 +1,4 @@
-import axios from "axios";
+import ApiClient from "../repositories/ApiClient";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 import DeleteSpot from "./DeleteSpot";
@@ -15,6 +15,8 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
   const [faveCount, setFaveCount] = useState(0);
   const [favedByUser, setFavedByUser] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+
+  const client = new ApiClient();
 
   useEffect(() => {
     const countFaves = (): number => {
@@ -44,13 +46,13 @@ const SwimPanel = (props: ISwimPanelProps): React.ReactElement => {
     if (favedByUser) {
       return;
     } else {
-      axios
-        .post("http://localhost:8090/api/favourites/create", {
+      client
+        .createFavourite("favourites/create", {
           user_name: props.currentUser,
           swim_spot_name: props.name,
         })
         .then((res) => {
-          console.log("Creating Spot");
+          console.log("Creating Favourite");
           console.log(res.data);
           setFaveCount(faveCount + 1);
           setFavedByUser(true);

@@ -47,17 +47,18 @@ func GetAllFavouritesByUser(w http.ResponseWriter, r *http.Request) {
 
 // Will CREATE a favourite 
 func CreateFavourite(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	middleware.AddCorsHeader(w)
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	} else {
 	requestBody, _ := ioutil.ReadAll(r.Body)
 	var favourite models.Favourite
 	json.Unmarshal(requestBody, &favourite)
 
 	db.Connector.Create(&favourite)
-    w.Header().Set("Content-Type", "application/json")
-	middleware.AddCorsHeader(w)
-	if r.Method == "OPTIONS" {
-		w.WriteHeader(http.StatusOK)
-		return
-	} else {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(favourite)
 	}

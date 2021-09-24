@@ -6,6 +6,11 @@ export interface ICreateSpotPayload {
   coordinates: string;
 }
 
+export interface ICreateFavouritePayload {
+  user_name: string | null;
+  swim_spot_name: string;
+}
+
 export interface ILoginPayload {
   user_name: string;
   password: string;

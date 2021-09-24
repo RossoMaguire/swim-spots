@@ -3,6 +3,7 @@ import {
   ICreateSpotPayload,
   ILoginPayload,
   IRegisterPayload,
+  ICreateFavouritePayload,
 } from "./interfaces/payloads";
 
 class ApiClient {
@@ -27,8 +28,11 @@ class ApiClient {
     return axios.post(this.baseUrl + url, payload, this.config);
   };
 
-  deleteSpot = (url: string): Promise<AxiosResponse<any>> => {
-    return axios.delete(this.baseUrl + url, this.config);
+  createFavourite = (
+    url: string,
+    payload: ICreateFavouritePayload
+  ): Promise<AxiosResponse<any>> => {
+    return axios.post(this.baseUrl + url, payload, this.config);
   };
 
   createLogin = (
@@ -56,6 +60,11 @@ class ApiClient {
 
   getUserFavourites = (url: string): Promise<AxiosResponse<any>> => {
     return axios.get(this.baseUrl + url, this.config);
+  };
+
+  // delete
+  deleteSpot = (url: string): Promise<AxiosResponse<any>> => {
+    return axios.delete(this.baseUrl + url, this.config);
   };
 }
 
