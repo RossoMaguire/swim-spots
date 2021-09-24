@@ -44,6 +44,12 @@ _a .env file that you can copy in will be provided with the submission on Moodle
 
 ### Start the project
 
+To create a frontend app that can be served by the web server run :
+
+```
+yarn build
+```
+
 To open the connection to the db and to run the api & web server :
 
 ```
